@@ -1,7 +1,11 @@
 package com.artur.db.narutoCrud2.model;
 
 import com.artur.db.narutoCrud2.interfaces.Ninja;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("TAIJUTSU")
 public class NinjaDeTaijutsu extends Personagem implements Ninja {
 
     @Override

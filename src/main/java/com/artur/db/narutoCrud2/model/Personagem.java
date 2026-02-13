@@ -12,6 +12,8 @@ import java.util.Map;
 @Setter
 @Entity
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
 public class Personagem {
 
     @Id
@@ -21,14 +23,23 @@ public class Personagem {
     @Transient
     private Map<String, Jutsu> jutsus = new HashMap<>();
     private int chakra = 100;
-    private int vida;
+    private int vida = 100;
 
     public Personagem(String nome) {
         this.nome = nome;
-        this.vida = 100;
     }
 
     public void adicionarJutsu(String nomeJutsu, Jutsu jutsu) {
         jutsus.put(nomeJutsu, jutsu);
+    }
+
+    public void atacar(Personagem inimigo) {
+        if (inimigo.getVida() <= 0) {
+            System.out.println(inimigo.getNome() + " já foi derrotado.");
+            return;
+        }
+
+        inimigo.setVida(Math.max(0, inimigo.getVida() - 10));
+        System.out.println(getNome() + " atacou " + inimigo.getNome() + " causando 10 de dano.");
     }
 }
